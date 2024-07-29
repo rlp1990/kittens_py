@@ -59,5 +59,10 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
 
 
+## Commit
+
+To ensure good code quality before committing, some hooks have been added, in case of a problem with `pre-commit` about binary files, please use following command: `git config --unset core.hooksPath` (it can be required just once).
+
+
 
 Created by [Rafael López Pérez](https://github.com/rlp1990)

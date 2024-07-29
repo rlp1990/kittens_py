@@ -1,0 +1,109 @@
+<div class="kittens__container">
+  <h1 class="kittens__container-title">How is the kitten?</h1>
+  <div class="kittens__container-content">
+    <h2>{{ kitten.name }}</h2>
+    @if (favoriteKittenIds$ | async; as favoriteKittenIds) {
+      @if (favoriteKittenIds.includes(kitten.id)) {
+        <span
+          (click)="onRemoveFavoriteClick($event, kitten)"
+          (keyup)="onRemoveFavoriteClick($event, kitten)"
+          nz-icon
+          nzType="star"
+          nzTheme="fill"
+          class="kitten__star"
+          [attr.data-remove-favorite]="kitten.id"
+        ></span>
+      } @else {
+        <span
+          (click)="onAddFavoriteClick($event, kitten)"
+          (keyup)="onAddFavoriteClick($event, kitten)"
+          class="kitten__star"
+          nz-icon
+          nzType="star"
+          nzTheme="outline"
+          [attr.data-add-favorite]="kitten.id"
+        ></span>
+      }
+    }
+    @defer {
+      <img src="{{ kitten.image_url }}" alt="{{ kitten.name }}" />
+    }
+    <div class="kitten__info-container">
+      <div class="kitten__info">
+        <span>Age:</span> <span>{{ kitten.age }}</span>
+        <span [attr.data-edit]="kitten.id" class="kitten__edit" (click)="openEditModal(kitten)"
+          ><span nz-icon nzType="edit" nzTheme="outline"></span
+        ></span>
+      </div>
+      <div class="kitten__info">
+        <span>Breed:</span> <span>{{ kitten.breed }}</span>
+        <span
+          class="kitten__delete"
+          nz-icon
+          nzType="delete"
+          nzTheme="outline"
+          (click)="onDeleteKitten(kitten.id)"
+          (keyup)="onDeleteKitten(kitten.id)"
+          [attr.data-delete]="kitten.id"
+          >
+        ></span>
+      </div>
+    </div>
+    <nz-table
+      #vaccinationsTable
+      [nzData]="kitten.vaccinations"
+      [nzTitle]="'Vaccinations'"
+      [nzTableLayout]="'fixed'"
+      [nzBordered]="true"
+      [nzShowPagination]="false"
+      [nzScroll]="{ y: '400px' }"
+      [nzFooter]="addVaccination"
+    >
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Date of administration</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (vaccination of vaccinationsTable.data; track $index) {
+          <tr>
+            <td>{{ vaccination.type }}</td>
+            <td>
+              {{ vaccination.date | date: "dd/MM/yyyy" }}
+            </td>
+            <td>
+              <div class="vaccination__actions">
+                <span
+                  class="kitten__edit"
+                  nz-icon
+                  nzType="edit"
+                  nzTheme="outline"
+                  (click)="onOpenVaccinationModal(kitten, $index)"
+                  (keyup)="onOpenVaccinationModal(kitten, $index)"
+                  [attr.data-edit-vaccination]="kitten.id"
+                ></span>
+                <span
+                  class="kitten__delete"
+                  nz-icon
+                  nzType="delete"
+                  nzTheme="outline"
+                  (click)="onDeleteVaccination(kitten, $index)"
+                  (keyup)="onDeleteVaccination(kitten, $index)"
+                  [attr.data-delete-vaccination]="kitten.id"
+                ></span>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<ng-template #addVaccination>
+  <button nz-button (click)="onOpenVaccinationModal(kitten)">
+    Add vaccination
+  </button>
+</ng-template>

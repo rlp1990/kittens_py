@@ -3,6 +3,9 @@
 # Python
 **/__pycache__/**
 
+# Static files
+static/*
+
 # Compiled output
 /dist
 /tmp

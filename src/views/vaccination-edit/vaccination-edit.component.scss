@@ -1,0 +1,17 @@
+
+.kittens__container {
+  .kittens__container-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+    .form-group {
+      display: flex;
+      column-gap: 16px;
+      align-items: center;
+      .label {
+        font-weight: bold;
+      }
+    }
+  }
+}

@@ -1,0 +1,50 @@
+
+.kittens__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 32px;
+  .kittens__container-content {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 8px;
+    flex: 1;
+    overflow-y: auto;
+    width: 100%;
+    align-items: flex-start;
+    padding-bottom: 12px;
+    .content__kitten {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      position: relative;
+      .kitten__star {
+        font-size: 24px;
+        color: gold;
+        position: absolute;
+        top: 50px;
+        right: 50px;
+      }
+      img {
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 30%;
+      }
+    }
+    .empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      p {
+        font-size: 24px;
+      }
+    }
+  }
+}

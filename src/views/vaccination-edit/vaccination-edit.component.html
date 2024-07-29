@@ -1,0 +1,19 @@
+<div class="kittens__container">
+  <div class="kittens__container-content" [formGroup]="form">
+    <div class="form-group">
+      <label class="label" [for]="'type'">Type: </label>
+      <input
+        nz-input
+        type="text"
+        class="form-control"
+        [id]="'type'"
+        [formControlName]="'type'"
+        [autocomplete]="'off'"
+      />
+    </div>
+    <div class="form-group">
+      <label class="label" [for]="'date'">Date: </label>
+      <nz-date-picker [formControlName]="'date'" [nzId]="'date'"></nz-date-picker>
+    </div>
+  </div>
+</div>

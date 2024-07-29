@@ -1,0 +1,56 @@
+.kittens__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 600px;
+  margin: 0 auto;
+  .kittens__container-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+    overflow-y: auto;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 18px;
+    position: relative;
+    img {
+      width: 400px;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 20%;
+    }
+    .kitten__info-container {
+      display: flex;
+      flex-direction: column;
+      width: 250px;
+      row-gap: 16px;
+      .kitten__info {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        span:first-child {
+          font-weight: bold;
+        }
+      }
+    }
+    .vaccination__actions {
+      display: flex;
+      column-gap: 16px;
+    }
+    .kitten__star {
+      font-size: 24px;
+      color: gold;
+      position: absolute;
+      top: 100px;
+      right: 120px;
+      cursor: pointer;
+    }
+    .kitten__edit,
+    .kitten__delete {
+      cursor: pointer;
+    }
+  }
+}

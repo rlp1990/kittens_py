@@ -4,6 +4,7 @@ from app.schemas import KittenCreate, KittenUpdate
 from app.crud import MongoDB
 import os
 from uuid import uuid4
+from fastapi.logger import logger
 
 router = APIRouter()
 
@@ -11,8 +12,12 @@ db = MongoDB(os.getenv("MONGODB_URL"), "kittens_db")
 
 @router.post("/kittens/", response_model=Kitten)
 async def create_kitten(kitten: KittenCreate):
-    kitten_id = await db.create_kitten(Kitten(**kitten.dict()))
-    return await db.get_kitten(kitten_id)
+    try:
+        kitten_id = await db.create_kitten(Kitten(**kitten.dict()))
+        return await db.get_kitten(kitten_id)
+    except Exception as e:
+        logger.error(f"Error creating kitten: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
 
 @router.get("/kittens/{kitten_id}", response_model=Kitten)
 async def read_kitten(kitten_id: str):
@@ -23,10 +28,14 @@ async def read_kitten(kitten_id: str):
 
 @router.put("/kittens/{kitten_id}", response_model=Kitten)
 async def update_kitten(kitten_id: str, kitten: KittenUpdate):
+  try:
     updated_kitten = await db.update_kitten(kitten_id, Kitten(**kitten.dict(exclude_unset=True)))
     if updated_kitten is None:
         raise HTTPException(status_code=404, detail="Kitten not found")
     return updated_kitten
+  except Exception as e:
+    logger.error(f"Error updating kitten: {str(e)}")
+    raise HTTPException(status_code=500, detail=str(e))
 
 @router.delete("/kittens/{kitten_id}")
 async def delete_kitten(kitten_id: str):

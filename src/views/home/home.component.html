@@ -1,0 +1,56 @@
+<div class="kittens__container">
+  <h1 class="kittens__container-title">Welcome Home Kittens!</h1>
+  <div class="kittens__container-content">
+    @if (favoriteKittenIds$ | async; as favoriteKittenIds) {
+      @for (kitten of kittens; track kitten.id) {
+        <a class="content__kitten" [routerLink]="[kitten.id]">
+          <h3>{{ kitten.name }}</h3>
+
+          @if (favoriteKittenIds.includes(kitten.id)) {
+            <span
+              (click)="onRemoveFavoriteClick($event, kitten)"
+              (keyup)="onRemoveFavoriteClick($event, kitten)"
+              nz-icon
+              nzType="star"
+              nzTheme="fill"
+              class="kitten__star"
+              [attr.data-remove-favorite]="kitten.id"
+            ></span>
+          } @else {
+            <span
+              (click)="onAddFavoriteClick($event, kitten)"
+              (keyup)="onAddFavoriteClick($event, kitten)"
+              class="kitten__star"
+              nz-icon
+              nzType="star"
+              nzTheme="outline"
+              [attr.data-add-favorite]="kitten.id"
+            ></span>
+          }
+          @defer {
+            <img src="{{ kitten.image_url }}" alt="{{ kitten.name }}" />
+          } @placeholder {
+            <img
+              src="https://via.placeholder.com/300"
+              alt="{{ kitten.name }}"
+            />
+          }
+        </a>
+      } @empty {
+        <div class="empty">
+          <p>No kittens yet!</p>
+          <button [attr.data-add]="'first'" nz-button (click)="onEditKitten()">
+            Add first kitten
+          </button>
+        </div>
+      }
+    }
+  </div>
+  @if (kittens.length > 0) {
+    <div class="kittens__footer">
+      <button [attr.data-add]="'one'" nz-button (click)="onEditKitten()">
+        Add kitten
+      </button>
+    </div>
+  }
+</div>

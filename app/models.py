@@ -2,6 +2,8 @@ from pydantic import BaseModel, Field
 from typing import Optional
 from bson import ObjectId
 from pydantic_core import core_schema
+from datetime import datetime
+from typing import List
 
 class PyObjectId(ObjectId):
     @classmethod
@@ -30,12 +32,17 @@ class PyObjectId(ObjectId):
             ),
         )
 
+class Vaccination(BaseModel):
+    type: str
+    date: datetime
+
 class Kitten(BaseModel):
-    id: Optional[PyObjectId] = Field(alias="_id")
+    id: PyObjectId = Field(default_factory=PyObjectId, alias='_id')
     name: str
     age: int
-    description: str
+    breed: str
     image_url: Optional[str] = None
+    vaccinations: List[Vaccination] = []
 
     class Config:
         arbitrary_types_allowed = True
